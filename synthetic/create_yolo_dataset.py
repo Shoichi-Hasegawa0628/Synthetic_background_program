@@ -50,12 +50,12 @@ if __name__ == '__main__':
         shutil.rmtree(save_root_dir)
     save_root_dir.mkdir(parents=True)
 
-    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.05, 0.5), scale2=(0.05, 0.5))
+    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.1, 0.5), scale2=(0.1, 0.5))
     root_val_dir = save_root_dir.joinpath("val")
     root_val_dir.mkdir()
     save_data(root_val_dir, dataset, iter=3)
 
-    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.05, 0.5), scale2=(0.5, 1.5))
+    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.1, 0.5), scale2=(0.1, 0.5))
     root_train_dir = save_root_dir.joinpath("train")
     root_train_dir.mkdir()
     save_data(root_train_dir, dataset, iter=10)

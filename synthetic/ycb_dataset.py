@@ -30,15 +30,15 @@ class YCBDataset(Dataset):
             # MultipleImageRandomGaussianBlur(p=0.1, kernel_size=(5, 9), sigma=(0.1, 5))
         ])
         self.background_transforms = tf.Compose([
-            tf.RandomHorizontalFlip(p=0.5),
-            tf.RandomVerticalFlip(p=0.5),
-            tf.ColorJitter(hue=(-0.2, 0.2)),
+            # tf.RandomHorizontalFlip(p=0.5),
+            # tf.RandomVerticalFlip(p=0.5),
+            # tf.ColorJitter(hue=(-0.2, 0.2)),
         ])
         self.after_transforms = tf.Compose([
-            tf.ColorJitter(brightness=0.05, contrast=0.05, saturation=0.05, hue=(-0.01, 0.01)),
+            # tf.ColorJitter(brightness=0.05, contrast=0.05, saturation=0.05, hue=(-0.01, 0.01)),
         ])
         self.object_rgb_transforms = tf.Compose([
-            tf.ColorJitter(brightness=(0.8, 1.5)),
+            tf.ColorJitter(brightness=(0.5, 1.0)),
         ])
         self.object_transforms1 = tf.Compose([
             MultipleImageRandomRotation(degrees=(0, 360), expand=True),
