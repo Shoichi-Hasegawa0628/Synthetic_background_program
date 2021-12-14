@@ -59,6 +59,8 @@ class YCBDataset(Dataset):
         self._to_tensor = tf.PILToTensor()
         self._object_image_paths = random.sample(self._object_image_paths, len(self._object_image_paths))
 
+
+
     # ==================================================================================================
     #
     #   Property
@@ -71,7 +73,8 @@ class YCBDataset(Dataset):
         if index < self._n_background_images:
             background_path = self._background_image_paths[index]
             background_image = self._load_background_image(background_path)
-            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 10))
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 8))
+
         else:
             background_image = Image.new(mode="RGB", size=(640, 480), color=tuple(Color.index_to_rgb(random.randint(0, 255))))
             indexes = np.random.randint(0, self._n_object_images, size=50)
