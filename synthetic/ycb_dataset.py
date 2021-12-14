@@ -38,10 +38,10 @@ class YCBDataset(Dataset):
             # tf.ColorJitter(brightness=0.05, contrast=0.05, saturation=0.05, hue=(-0.01, 0.01)),
         ])
         self.object_rgb_transforms = tf.Compose([
-            tf.ColorJitter(brightness=(0.5, 1.0)),
+            tf.ColorJitter(brightness=(0.8, 1.2)),
         ])
         self.object_transforms1 = tf.Compose([
-            MultipleImageRandomRotation(degrees=(0, 360), expand=True),
+            # MultipleImageRandomRotation(degrees=(0, 360), expand=True),
             MultipleImageRandomResized(size=200),
         ])
         self.object_transforms2 = tf.Compose([
@@ -151,7 +151,7 @@ class YCBDataset(Dataset):
         for ycb_object in ycb_objects:
             _, obj_height, obj_width = ycb_object.shape
             x = random.randint(0, bg_width - obj_width)
-            y = random.randint(0, bg_height - obj_height)
+            y = random.randint(239, bg_height - obj_height)
 
             rectangle = (x, y, x + obj_width, y + obj_height)
             rectangles.append(rectangle)
