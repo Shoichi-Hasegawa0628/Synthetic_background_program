@@ -42,10 +42,10 @@ class YCBDataset(Dataset):
         ])
         self.object_transforms1 = tf.Compose([
             # MultipleImageRandomRotation(degrees=(0, 360), expand=True),
-            MultipleImageRandomResized(size=200),
+             # MultipleImageRandomResized(size=200),
         ])
         self.object_transforms2 = tf.Compose([
-            MultipleImageRandomResized(size=200),
+            # MultipleImageRandomResized(size=200),
         ])
 
         self.object_transforms3 = tf.Compose([
