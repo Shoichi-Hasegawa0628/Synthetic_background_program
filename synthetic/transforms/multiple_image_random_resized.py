@@ -22,5 +22,6 @@ class MultipleImageRandomResized(transforms.Resize):
             PIL Image or Tensor: Rescaled image.
         """
         width, height = F._get_image_size(imgs[0])
-        scale = self.size / max(width, height)
+        #scale = self.size / max(width, height)
+        scale = self.size / height
         return [F.resize(img, [int(height * scale), int(width * scale)], self.interpolation, self.max_size, self.antialias) for img in imgs]

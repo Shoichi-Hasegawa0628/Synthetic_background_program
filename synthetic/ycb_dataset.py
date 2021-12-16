@@ -6,6 +6,7 @@ import torch
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms as tf
+from torchvision.transforms import functional as F, InterpolationMode
 from tqdm import tqdm
 from natsort import natsorted
 
@@ -45,7 +46,7 @@ class YCBDataset(Dataset):
              # MultipleImageRandomResized(size=200),
         ])
         self.object_transforms2 = tf.Compose([
-            # MultipleImageRandomResized(size=200),
+            MultipleImageRandomResized(size=240),
         ])
 
         self.object_transforms3 = tf.Compose([
@@ -75,9 +76,13 @@ class YCBDataset(Dataset):
             background_image = self._load_background_image(background_path)
             indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 8))
 
+        # else:
+        #     background_image = Image.new(mode="RGB", size=(640, 480), color=tuple(Color.index_to_rgb(random.randint(0, 255))))
+        #     indexes = np.random.randint(0, self._n_object_images, size=50)
         else:
-            background_image = Image.new(mode="RGB", size=(640, 480), color=tuple(Color.index_to_rgb(random.randint(0, 255))))
-            indexes = np.random.randint(0, self._n_object_images, size=50)
+            background_path = self._background_image_paths[random.randint(0, self._n_background_images - 1)]
+            background_image = self._load_background_image(background_path)
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 8))
 
         object_paths = [self._object_image_paths[i] for i in indexes]
 
@@ -128,8 +133,10 @@ class YCBDataset(Dataset):
 
             # if min_x == max_x or min_y == max_y:
             #     continue
-
-            object_rgb, object_mask = self.object_transforms2([object_rgb, object_mask])
+            width, height = F._get_image_size(object_rgb[0])
+            if height > 240:
+                object_rgb, object_mask = self.object_transforms2([object_rgb, object_mask])
+            # object_rgb, object_mask = self.object_transforms2([object_rgb, object_mask])
             if random.random() < 0.95:
                 object_rgb, object_mask = self.object_transforms3([object_rgb, object_mask])
             else:
