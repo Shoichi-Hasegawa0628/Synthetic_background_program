@@ -29,24 +29,24 @@ class YCBDatasetInfo(Dataset):
     #     "024_bath_slipper"
     # ]
 
-    raw_object_names = [
-        "001_banana",
-        "002_apple",
-        "003_orange",
-        "004_cracker_box",
-        "005_pudding_box",
-        "006_pig_doll",
-        "007_sheep_doll",
-        "008_penguin_doll",
-        "009_cup"
-    ]
-
     # raw_object_names = [
-    #     "001_toiletries",
-    #     "002_snack",
-    #     "003_doll",
-    #     "004_fruits"
+    #     "001_banana",
+    #     "002_apple",
+    #     "003_orange",
+    #     "004_cracker_box",
+    #     "005_pudding_box",
+    #     "006_pig_doll",
+    #     "007_sheep_doll",
+    #     "008_penguin_doll",
+    #     "009_cup"
     # ]
+
+    raw_object_names = [
+        "001_toiletries",
+        "002_snack",
+        "003_doll",
+        "004_fruits"
+    ]
 
     raw_object_id_to_name_dict = {
         # 1: "plate",
@@ -74,20 +74,20 @@ class YCBDatasetInfo(Dataset):
         # 23: "sponge",
         # 24: "bath_slipper"
 
-        1: "banana",
-        2: "apple",
-        3: "orange",
-        4: "cracker_box",
-        5: "pudding_box",
-        6: "pig_doll",
-        7: "sheep_doll",
-        8: "penguin_doll",
-        9: "cup"
+        # 1: "banana",
+        # 2: "apple",
+        # 3: "orange",
+        # 4: "cracker_box",
+        # 5: "pudding_box",
+        # 6: "pig_doll",
+        # 7: "sheep_doll",
+        # 8: "penguin_doll",
+        # 9: "cup"
 
-        # 1: "toiletries",
-        # 2: "snack",
-        # 3: "doll",
-        # 4: "fruits",
+        1: "toiletries",
+        2: "snack",
+        3: "doll",
+        4: "fruits"
 
     }
 
@@ -117,20 +117,20 @@ class YCBDatasetInfo(Dataset):
         # 23: 22,
         # 24: 23
 
-        1: 0,
-        2: 1,
-        3: 2,
-        4: 3,
-        5: 4,
-        6: 5,
-        7: 6,
-        8: 7,
-        9: 8
-
         # 1: 0,
         # 2: 1,
         # 3: 2,
-        # 4: 3
+        # 4: 3,
+        # 5: 4,
+        # 6: 5,
+        # 7: 6,
+        # 8: 7,
+        # 9: 8
+
+        1: 0,
+        2: 1,
+        3: 2,
+        4: 3
     }
 
     # url = "http://ycb-benchmarks.s3-website-us-east-1.amazonaws.com/data/objects.json"
