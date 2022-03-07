@@ -42,22 +42,25 @@ def save_data(root_path, dataset, iter, s=0):
 
 
 if __name__ == '__main__':
-    root = Path.home().joinpath("HSR/datasets/frontiers2021_object")
+    root = Path.home().joinpath("HSR/datasets/irex2022_object")
     objects_dir = root.joinpath("objects")
     background_dir_dir = root.joinpath("backgrounds")
 
-    save_root_dir = Path.home().joinpath("HSR/datasets/frontiers2021_object_for_yolov5")
+    save_root_dir = Path.home().joinpath("HSR/datasets/irex2022_object_for_yolov5")
     if save_root_dir.exists():
         shutil.rmtree(save_root_dir)
     save_root_dir.mkdir(parents=True)
 
-    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.5, 1.0), scale2=(0.5, 1.0))
+    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.44, 0.88), scale2=(0.44, 0.88)) # 物体探索用
+    # dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.8, 1.05), scale2=(0.8, 1.05)) # マニピュレーション用
     root_val_dir = save_root_dir.joinpath("val")
     root_val_dir.mkdir()
     save_data(root_val_dir, dataset, iter=1) #3
     # save_data(root_val_dir, random.choices(dataset, k=100) , iter=1)
 
-    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.5, 1.0), scale2=(0.5, 1.0))
+    dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.4, 0.88), scale2=(0.4, 0.88)) # 物体探索用
+    # dataset = YCBDataset(objects_dir, background_dir_dir, scale1=(0.8, 1.05), scale2=(0.8, 1.05)) # マニピュレーション用
     root_train_dir = save_root_dir.joinpath("train")
     root_train_dir.mkdir()
-    save_data(root_train_dir, dataset, iter=25)
+    save_data(root_train_dir, dataset, iter=20) # 物体探索用
+    # save_data(root_train_dir, dataset, iter=10) # マニピュレーション用
