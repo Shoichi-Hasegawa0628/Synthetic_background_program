@@ -74,8 +74,8 @@ class YCBDataset(Dataset):
         if index < self._n_background_images:
             background_path = self._background_image_paths[index]
             background_image = self._load_background_image(background_path)
-            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5)) # 物体探索用 #伊藤は3にしてた
-            # indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 2)) # マニピュレーション用
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5))
+
 
         # else:
         #     background_image = Image.new(mode="RGB", size=(640, 480), color=tuple(Color.index_to_rgb(random.randint(0, 255))))
@@ -83,8 +83,7 @@ class YCBDataset(Dataset):
         else:
             background_path = self._background_image_paths[random.randint(0, self._n_background_images - 1)]
             background_image = self._load_background_image(background_path)
-            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5)) # 物体探索用 #伊藤は3にしてた
-            # indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 2)) # マニピュレーション用
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5))
 
         object_paths = [self._object_image_paths[i] for i in indexes]
 
@@ -163,8 +162,8 @@ class YCBDataset(Dataset):
         for ycb_object in ycb_objects:
             _, obj_height, obj_width = ycb_object.shape
             x = random.randint(0, bg_width - obj_width)
-            y = random.randint(239, bg_height - obj_height) # 物体探索用
-            # y = random.randint(0, bg_height - obj_height) # マニピュレーション用
+            y = random.randint(239, bg_height - obj_height)
+
 
             rectangle = (x, y, x + obj_width, y + obj_height)
             rectangles.append(rectangle)
