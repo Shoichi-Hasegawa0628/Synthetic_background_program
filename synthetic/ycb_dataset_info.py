@@ -5,8 +5,8 @@ class YCBDatasetInfo(Dataset):
     raw_object_names = [
         "001_apple",
         "002_orange",
-        "003_cracker_box",
-        "004_pudding_box",
+        "003_cracker",
+        "004_chips_bag",
         "005_coffee",
         "006_muscat",
         "007_penguin_doll",
@@ -19,8 +19,8 @@ class YCBDatasetInfo(Dataset):
     raw_object_id_to_name_dict = {
         1: "apple",
         2: "orange",
-        3: "cracker_box",
-        4: "pudding_box",
+        3: "cracker",
+        4: "chips_bag",
         5: "coffee",
         6: "muscat",
         7: "penguin_doll",
