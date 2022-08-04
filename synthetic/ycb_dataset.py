@@ -39,7 +39,8 @@ class YCBDataset(Dataset):
             # tf.ColorJitter(brightness=0.05, contrast=0.05, saturation=0.05, hue=(-0.01, 0.01)),
         ])
         self.object_rgb_transforms = tf.Compose([
-            tf.ColorJitter(brightness=(0.8, 1.2)),
+            # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+            # tf.ColorJitter(brightness=(0.8, 1.2)),
         ])
         self.object_transforms1 = tf.Compose([
             # MultipleImageRandomRotation(degrees=(0, 360), expand=True),
@@ -74,7 +75,7 @@ class YCBDataset(Dataset):
         if index < self._n_background_images:
             background_path = self._background_image_paths[index]
             background_image = self._load_background_image(background_path)
-            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5))
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 3))
 
 
         # else:
@@ -83,7 +84,7 @@ class YCBDataset(Dataset):
         else:
             background_path = self._background_image_paths[random.randint(0, self._n_background_images - 1)]
             background_image = self._load_background_image(background_path)
-            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 5))
+            indexes = np.random.randint(0, self._n_object_images, size=random.randint(1, 3))
 
         object_paths = [self._object_image_paths[i] for i in indexes]
 
@@ -122,7 +123,61 @@ class YCBDataset(Dataset):
         background = self.background_transforms(common_transformed[0])
         background = self._to_tensor(background)
 
-        object_rgbs = [self.object_rgb_transforms(rgb) for rgb in common_transformed[1:]]
+        # object_rgbs = [self.object_rgb_transforms(rgb) for rgb in common_transformed[1:]]
+
+        new_object_rgbs = []
+        for rgb, label in zip(common_transformed[1:], object_classes) :
+            if label == 0:
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.8, 1.2)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+
+            elif label == 1:
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.8, 1.0)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+
+            elif label == 2:
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.6, 1.0)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+            
+            elif label == 3 :
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.8, 1.2)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+
+            elif label == 4 :
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.7, 1.2), saturation=(1.5, 2.0)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+
+            else :
+                object_rgb_transform = tf.Compose([
+                    # tf.ColorJitter(brightness=(0.8, 1.2), saturation=(0, 0.5)),
+                    tf.ColorJitter(brightness=(0.8, 1.2)),
+                    ])
+                rgb = object_rgb_transform(rgb)
+
+                rgb = object_rgb_transform(rgb)
+
+            new_object_rgbs.append(rgb)
+
+        object_rgbs = new_object_rgbs
+
+ 
+        
+
 
         for object_rgb, object_mask, object_class in zip(object_rgbs, object_masks, object_classes):
             object_rgb, object_mask = self.object_transforms1([object_rgb, object_mask])
@@ -139,9 +194,18 @@ class YCBDataset(Dataset):
                 object_rgb, object_mask = self.object_transforms2([object_rgb, object_mask])
             # object_rgb, object_mask = self.object_transforms2([object_rgb, object_mask])
             if random.random() < 0.95:
-                object_rgb, object_mask = self.object_transforms3([object_rgb, object_mask])
+                if object_class == 4:
+                    frog_transform = tf.Compose([MultipleImageRandomRescale(scale=(0.44, 0.7))])
+                    object_rgb, object_mask = frog_transform([object_rgb, object_mask])
+                else :
+                    object_rgb, object_mask = self.object_transforms3([object_rgb, object_mask])
             else:
-                object_rgb, object_mask = self.object_transforms4([object_rgb, object_mask])
+                if object_class == 4:
+                    frog_transform = tf.Compose([MultipleImageRandomRescale(scale=(0.4, 0.7))])
+                    object_rgb, object_mask = frog_transform([object_rgb, object_mask])
+                else :
+                    object_rgb, object_mask = self.object_transforms3([object_rgb, object_mask])
+                
 
             rgb_outs.append(object_rgb)
             mask_outs.append(object_mask)
@@ -162,7 +226,7 @@ class YCBDataset(Dataset):
         for ycb_object in ycb_objects:
             _, obj_height, obj_width = ycb_object.shape
             x = random.randint(0, bg_width - obj_width)
-            y = random.randint(239, bg_height - obj_height)
+            y = random.randint(50, bg_height - obj_height)
 
 
             rectangle = (x, y, x + obj_width, y + obj_height)
@@ -312,7 +376,7 @@ class YCBDataset(Dataset):
         rgb_dict = {}
 
         for object_dir in tqdm(list(natsorted(objects_dir.iterdir()))):
-            object_no = YCBDatasetInfo.object_id_to_index_dict[int(object_dir.name.split("_")[1])]
+            object_no = YCBDatasetInfo.object_id_to_index_dict[int(object_dir.name.split("_")[0])]
 
 
             if object_no not in rgb_dict:

@@ -4,29 +4,21 @@ from torch.utils.data import Dataset
 class YCBDatasetInfo(Dataset):
     raw_object_names = [
         "001_apple",
-        "002_orange",
-        "003_cracker",
-        "004_chips_bag",
-        "005_coffee",
-        "006_muscat",
-        "007_penguin_doll",
-        "008_frog_shaped_sponge",
-        "009_cup",
-        "010_sponge"
+        "002_cracker",
+        "003_coffee",
+        "004_penguin_doll",
+        "005_frog_shaped_sponge",
+        "006_cup"
     ]
 
 
     raw_object_id_to_name_dict = {
         1: "apple",
-        2: "orange",
-        3: "cracker",
-        4: "chips_bag",
-        5: "coffee",
-        6: "muscat",
-        7: "penguin_doll",
-        8: "frog_shaped_sponge",
-        9: "cup",
-        10: "sponge"
+        2: "cracker",
+        3: "coffee",
+        4: "penguin_doll",
+        5: "frog_shaped_sponge",
+        6: "cup"
     }
 
     object_id_to_index_dict = {
@@ -35,11 +27,7 @@ class YCBDatasetInfo(Dataset):
         3: 2,
         4: 3,
         5: 4,
-        6: 5,
-        7: 6,
-        8: 7,
-        9: 8,
-        10: 9
+        6: 5
     }
 
     # url = "http://ycb-benchmarks.s3-website-us-east-1.amazonaws.com/data/objects.json"
